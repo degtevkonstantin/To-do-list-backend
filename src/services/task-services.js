@@ -5,21 +5,25 @@ const getTasks = async () => {
   return tasks;
 };
 
-
 const createTask = async (text) => {
   const newTask = new Task({ text });
   const savedTask = await newTask.save();
   return savedTask;
 };
 
-const deleteTask = async (id1) => {
-  await Task.find({_id: id1}).deleteOne()
-  return true
+const deleteTask = async (id) => {
+  const result = await Task({_id: id }).deleteOne()
+  return result;
 }
 
 const deleteTasks = async () => {
-  await Task.deleteMany()
-  return true
+  const result = await Task.deleteMany()
+  return result;
+}
+
+const patchTask = (id, text, isCheck) => {
+  const result = Task.findByIdAndUpdate(id, {text, isCheck})
+  return result;
 }
 
 module.exports = {
@@ -27,4 +31,5 @@ module.exports = {
   createTask,
   deleteTask,
   deleteTasks,
+  patchTask,
 }

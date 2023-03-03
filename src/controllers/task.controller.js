@@ -1,9 +1,9 @@
-const Task = require('../models/task/index');
-const { getTasks, createTask, deleteTask, deleteTasks} = require("../services/task-services");
+const { getTasks, createTask, deleteTask, deleteTasks, patchTask} = require("../services/task-services");
 
 const getAllTasks = async (req, res) => {
   try {
     const tasks = await getTasks();
+
     res.status(200).send(tasks);
   } catch (error) {
     res.status(400).send("Failed to get tasks");
@@ -14,6 +14,7 @@ const createOneTask = async (req, res) => {
   try {
     const { text } = req.body;
     const task = await createTask(text);
+
     res.status(200).send(task);
   } catch (error) {
     res.status(400).send("Failed to create tasks");
@@ -22,9 +23,10 @@ const createOneTask = async (req, res) => {
 
 const deleteOneTask = async (req, res) => {
   try {
-    const id1 = req.body.id
-    const task = await deleteTask(id1);
-    res.status(200).send('task is deleted')
+    const objectId = req.body.id
+    const info = await deleteTask(objectId);
+
+    res.status(200).send(info)
   } catch (error) {
     res.status(400).send("Failed to delete task");
   }
@@ -32,10 +34,24 @@ const deleteOneTask = async (req, res) => {
 
 const deleteAllTasks = async (req, res) => {
   try {
-    const task = await deleteTasks();
-    res.status(200).send('tasks id deleted')
+    const info = await deleteTasks();
+
+    res.status(200).send(info)
   } catch (error) {
     res.status(400).send("Failed to delete tasks")
+  }
+}
+
+const patchOneTask = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const { text } = req.body;
+    const { isCheck } = req.body;
+    const info = await patchTask(id, text, isCheck);
+
+    res.status(200).send(info)
+  } catch {
+    res.status(400).send("Failed to patch task")
   }
 }
 
@@ -44,5 +60,6 @@ const deleteAllTasks = async (req, res) => {
     createOneTask,
     deleteOneTask,
     deleteAllTasks,
+    patchOneTask,
   }
 

@@ -1,17 +1,26 @@
+const apiRouters = require('./src/routes/routes');
 const express = require('express');
 const mongoose = require('mongoose');
-const Task = require('./src/models/task/index');
 const app = express();
 app.use(express.json());
+const { PORT,  DB_CONNECTION } = require('./config')
 
-const apiRouters = require('./src/routes/routes');
+const loadApp = async () => {
+  try {
+    await mongoose.connect(DB_CONNECTION, {
+      useNewUrlParser: true, 
+      useUnifiedTopology: true,
+    });
+    
+    app.listen(PORT, () => {
+      console.log("Example app listening on", PORT);
+    });
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
-const url = "mongodb+srv://degtevfortech:VvfSo5MgiYWNvp7B@cluster0.97mygr1.mongodb.net/To_do_list"
-
-mongoose.connect(url)
+loadApp();
 
 app.use('/', apiRouters);
-
-app.listen(8000, () => {
-  console.log('Work 8000')
-});
