@@ -12,18 +12,23 @@ const createTask = async (text) => {
 };
 
 const deleteTask = async (id) => {
-  const result = await Task({_id: id }).deleteOne()
-  return result;
+  const infoAboutDeletion = await Task({_id: id }).deleteOne()
+  return infoAboutDeletion;
 }
 
 const deleteTasks = async () => {
-  const result = await Task.deleteMany()
-  return result;
+  const infoAboutDeletion = await Task.deleteMany()
+  return infoAboutDeletion;
 }
 
-const patchTask = (id, text, isCheck) => {
-  const result = Task.findByIdAndUpdate(id, {text, isCheck})
-  return result;
+const patchTextTask = async (id, text) => {
+  const infoAboutEditing = await Task.findByIdAndUpdate(id, { text });
+  return infoAboutEditing;
+}
+
+const patchCheckboxTask = async  (id, isCheck) => {
+  const infoAboutEditing = await Task.findByIdAndUpdate(id, { isCheck });
+  return infoAboutEditing;
 }
 
 module.exports = {
@@ -31,5 +36,6 @@ module.exports = {
   createTask,
   deleteTask,
   deleteTasks,
-  patchTask,
+  patchTextTask,
+  patchCheckboxTask,
 }
