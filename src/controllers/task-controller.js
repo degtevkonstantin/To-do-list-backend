@@ -1,4 +1,4 @@
-const { getTasks, createTask, deleteTask, deleteTasks, patchTextTask, patchCheckboxTask} = require("../services/task-services");
+const { getTasks, createTask, deleteTask, deleteTasks, editTextTask, patchCheckboxTask: editCheckboxTask} = require("../services/task-services");
 
 const getAllTasks = async (req, res) => {
   try {
@@ -24,8 +24,8 @@ const createOneTask = async (req, res) => {
 
 const deleteOneTask = async (req, res) => {
   try {
-    const taskId = req.body.id
-    const infoAboutDeletion = await deleteTask(taskId);
+    const { id } = req.params
+    const infoAboutDeletion = await deleteTask(id);
 
     res.status(200).send(infoAboutDeletion)
   } catch (error) {
@@ -45,12 +45,12 @@ const deleteAllTasks = async (req, res) => {
 
 const editTextById = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const { text } = req.body;
 
-    const infoAboutEditing = await patchTextTask(id, text);
+    const objectAfterUpdate = await editTextTask(id, text);
 
-    res.status(200).send(infoAboutEditing)
+    res.status(200).send(objectAfterUpdate)
   } catch {
     res.status(400).send("Failed to patch task")
   }
@@ -58,12 +58,12 @@ const editTextById = async (req, res) => {
 
 const editCheckboxById = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const { isCheck } = req.body;
 
-    const infoAboutEditing = await patchCheckboxTask(id, isCheck);
+    const objectAfterUpdate = await editCheckboxTask(id, isCheck);
 
-    res.status(200).send(infoAboutEditing);
+    res.status(200).send(objectAfterUpdate);
   } catch {
     res.status(400).send("Failed to patch task");
   }

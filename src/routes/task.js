@@ -7,7 +7,7 @@ router.get('/tasks', getAllTasks);
 router.post('/tasks', validationText, createOneTask);
 router.delete('/tasks/:id', deleteOneTask);
 router.delete('/tasks', deleteAllTasks);
-router.patch('/tasks/:id/text', editTextById);
-router.patch('/tasks/:id/checkbox', editCheckboxById)
+router.patch(`/tasks/text/:id/`, editTextById);
+router.patch('/tasks/checkbox/:id/', editCheckboxById);
 
 module.exports = router;

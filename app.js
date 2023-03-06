@@ -1,9 +1,10 @@
-const apiRouters = require('./src/routes/task');
 const express = require('express');
 const mongoose = require('mongoose');
-const { PORT,  DB_CONNECTION } = require('./config')
 const app = express();
+const apiRouters = require('./src/routes/task');
+const { PORT,  DB_CONNECTION } = require('./config')
 app.use(express.json());
+
 app.use('/', apiRouters);
 
 const loadApp = async () => {
@@ -17,7 +18,7 @@ const loadApp = async () => {
       console.log(`Example app listening on ${PORT}`);
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     process.exit(1);
   }
 }
