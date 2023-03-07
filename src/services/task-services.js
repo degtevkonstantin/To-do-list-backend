@@ -1,4 +1,4 @@
-const Task = require("../models/task");
+const Task = require('../models/task');
 
 const getTasks = async () => {
   const tasks = await Task.find();
@@ -14,27 +14,31 @@ const createTask = async (text) => {
 };
 
 const deleteTask = async (id) => {
-  const infoAboutDeletion = await Task({_id: id }).deleteOne()
+  const infoAboutDeletion = await Task().deleteOne({_id: id });
 
   return infoAboutDeletion;
 }
 
 const deleteTasks = async () => {
-  const infoAboutDeletion = await Task.deleteMany()
+  const infoAboutDeletion = await Task.deleteMany();
 
   return infoAboutDeletion;
 }
 
 const editTextTask = async (id, text) => {
-  const objectAfterUpdate = await Task.replaceOne({_id: id}, { text: text });
+  const taskAfterUpdate = await Task.replaceOne({_id: id}, { text: text });
 
-  return objectAfterUpdate;
+  return taskAfterUpdate;
 }
 
 const editCheckboxTask = async  (id, isCheck) => {
-  const objectAfterUpdate = await Task.findByIdAndUpdate(id, { isCheck });
+  const taskAfterUpdate = await Task.findByIdAndUpdate(
+    id, 
+    { isCheck },
+    { new: true }
+   );
   
-  return objectAfterUpdate;
+  return taskAfterUpdate;
 }
 
 module.exports = {

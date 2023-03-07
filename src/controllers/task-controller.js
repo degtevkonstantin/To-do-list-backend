@@ -1,4 +1,11 @@
-const { getTasks, createTask, deleteTask, deleteTasks, editTextTask, patchCheckboxTask: editCheckboxTask} = require("../services/task-services");
+const { 
+  getTasks, 
+  createTask, 
+  deleteTask, 
+  deleteTasks, 
+  editTextTask, 
+  editCheckboxTask
+} = require("../services/task-services");
 
 const getAllTasks = async (req, res) => {
   try {
@@ -6,6 +13,7 @@ const getAllTasks = async (req, res) => {
 
     res.status(200).send(tasks);
   } catch (error) {
+
     res.status(400).send("Failed to get tasks");
   }
 };
@@ -27,7 +35,7 @@ const deleteOneTask = async (req, res) => {
     const { id } = req.params
     const infoAboutDeletion = await deleteTask(id);
 
-    res.status(200).send(infoAboutDeletion)
+    res.status(200).send(infoAboutDeletion);
   } catch (error) {
     res.status(400).send("Failed to delete task");
   }
@@ -37,9 +45,9 @@ const deleteAllTasks = async (req, res) => {
   try {
     const infoAboutDeletion = await deleteTasks();
 
-    res.status(200).send(infoAboutDeletion)
+    res.status(200).send(infoAboutDeletion);
   } catch (error) {
-    res.status(400).send("Failed to delete tasks")
+    res.status(400).send("Failed to delete tasks");
   }
 }
 
@@ -48,11 +56,11 @@ const editTextById = async (req, res) => {
     const { id } = req.params;
     const { text } = req.body;
 
-    const objectAfterUpdate = await editTextTask(id, text);
+    const taskAfterUpdate = await editTextTask(id, text);
 
-    res.status(200).send(objectAfterUpdate)
+    res.status(200).send(taskAfterUpdate);
   } catch {
-    res.status(400).send("Failed to patch task")
+    res.status(400).send("Failed to edit task");
   }
 }
 
@@ -61,11 +69,11 @@ const editCheckboxById = async (req, res) => {
     const { id } = req.params;
     const { isCheck } = req.body;
 
-    const objectAfterUpdate = await editCheckboxTask(id, isCheck);
+    const taskAfterUpdate = await editCheckboxTask(id, isCheck);
 
-    res.status(200).send(objectAfterUpdate);
+    res.status(200).send(taskAfterUpdate);
   } catch {
-    res.status(400).send("Failed to patch task");
+    res.status(400).send("Failed to edit task");
   }
 }
 
