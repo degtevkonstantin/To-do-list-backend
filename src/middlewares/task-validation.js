@@ -3,11 +3,11 @@ const { validatorResult } = require('./validation-result')
 
 const validationText = [
   check('text') 
-  // .validatorResult()
   .isString()
   .trim()
   .notEmpty()
-  ];
+  .validatorResult()
+];
 
 
 module.exports = {
