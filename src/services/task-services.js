@@ -26,7 +26,11 @@ const deleteTasks = async () => {
 }
 
 const editTextTask = async (id, text) => {
-  const taskAfterUpdate = await Task.replaceOne({_id: id}, { text: text });
+  const taskAfterUpdate = await Task.findByIdAndUpdate(
+    id, 
+    { text },
+    { new: true }
+   );
 
   return taskAfterUpdate;
 }
