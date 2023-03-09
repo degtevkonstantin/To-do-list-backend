@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { validationText } = require('../middlewares/task-validation');
+const { validationText, validationCheckbox } = require('../middlewares/task-validation');
 const { 
   getAllTasks, 
   createOneTask, 
@@ -14,7 +14,7 @@ router.get('/tasks', getAllTasks);
 router.post('/tasks', validationText, createOneTask);
 router.delete('/tasks/:id', deleteOneTask);
 router.delete('/tasks', deleteAllTasks);
-router.patch(`/tasks/text/:id/`, editTextById);
-router.patch('/tasks/checkbox/:id/', editCheckboxById);
+router.patch(`/tasks/text/:id/`,validationText, editTextById);
+router.patch('/tasks/checkbox/:id/', validationCheckbox, editCheckboxById);
 
 module.exports = router;

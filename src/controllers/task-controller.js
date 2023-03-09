@@ -13,7 +13,6 @@ const getAllTasks = async (req, res) => {
 
     res.status(200).send(tasks);
   } catch (error) {
-
     res.status(400).send("Failed to get tasks");
   }
 };
